@@ -26,7 +26,7 @@ IFS=',' read -ra CLIENT_ARRAY <<< "$CLIENTS"
 mkdir -p results
 
 # Install dependencies
-pip install -r requirements.txt
+pip install -r requirements.txt --break-system-packages --ignore-installed
 make prepare_tools
 
 # Find leaf directories

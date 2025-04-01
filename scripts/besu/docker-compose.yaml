@@ -11,7 +11,9 @@ services:
     - ${EC_DATA_DIR}:/var/lib/besu/data
     - ${EC_JWT_SECRET_PATH}:/tmp/jwt/jwtsecret
     - ${CHAINSPEC_PATH}:/tmp/chainspec/chainspec.json
-    user: root
+    - /opt/gas-benchmarks/scripts/besu/async-profiler-3.0-linux-x64:/async-profiler
+    - ${USER_HOME}/profiles:/profiles
+    user: "1009:1009"
     ports:
     - 30303:30303/tcp
     - 30303:30303/udp
@@ -44,6 +46,11 @@ services:
       options:
         max-size: 10m
         max-file: "10"
+    cap_add:
+    - SYS_ADMIN
+    - PERFMON
+    environment:
+      JAVA_TOOL_OPTIONS: "${JAVA_TOOL_OPTIONS}"
 networks:
   gas:
     name: gas-network
